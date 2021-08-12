@@ -1,0 +1,21 @@
+﻿version: "3.9"
+services:
+    web:
+        build: .
+        environment:
+            ASPNETCORE_ENVIRONMENT: "Development"
+            ASPNETCORE_URLS: "https://+:5001;http://+:5000"
+            ASPNETCORE_Kestrel__Certificates__Default__Path: "/https/Diploma.pfx"
+            ASPNETCORE_Kestrel__Certificates__Default__Password: "crypticpassword"
+        ports:
+            - "12345:5001"
+            - "12346:5000"
+        depends_on:
+            - db
+        volumes:
+            - ${USERPROFILE}\.aspnet\https:/https/
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "diploma_dbPass"
+            ACCEPT_EULA: "Y" 
