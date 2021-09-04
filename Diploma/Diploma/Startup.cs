@@ -28,6 +28,7 @@ namespace Diploma
             services.AddMvcCustom();
             services.AddSwaggerCustom();
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +44,12 @@ namespace Diploma
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials()); 
 
             app.UseAuthentication();
             app.UseAuthorization();
