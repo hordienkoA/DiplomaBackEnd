@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Diploma.Models;
+using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -19,7 +19,14 @@ namespace Diploma.CQRS.Register
         }
         public async Task<IdentityResult> Handle(RegisterQuery request, CancellationToken cancellationToken)
         {
-            var user = new User {Email = request.Email, UserName = request.UserName, Sex = request.Sex};
+            var user = new User
+            {
+                Email = request.Email,
+                UserName = request.UserName,
+                FirstName = request.FirstName,
+                SecondName = request.SecondName,
+                Age = request.Age
+            };
             var result = await _userManager.CreateAsync(user, request.Password);
 
             return result;

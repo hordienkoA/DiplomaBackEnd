@@ -24,8 +24,9 @@ namespace Diploma
             services.AddSqlServerCustom(Configuration.GetConnectionString("DefaultConnection"));
             services.AddIdentityCustom();
             services.AddServicesCustom();
-            services.AddAuthenticationCustom(Configuration);
             services.AddMvcCustom();
+            services.AddAuthenticationCustom(Configuration);
+            services.AddAuthorizationCustom();
             services.AddSwaggerCustom();
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddCors();
@@ -45,11 +46,7 @@ namespace Diploma
 
             app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .AllowCredentials()); 
+            app.UseCorsCustom();
 
             app.UseAuthentication();
             app.UseAuthorization();

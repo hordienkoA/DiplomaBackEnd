@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Diploma.CQRS.Login;
 using Diploma.CQRS.Register;
-using Diploma.JWT;
 using Diploma.Views;
+using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diploma.Controllers
@@ -44,12 +45,12 @@ namespace Diploma.Controllers
             return Unauthorized("Login failed");
         }
 
-        
         [Route("test")]
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> Test()
         {
-            return Ok($"Вы авторизированы,{User.Identity.Name}");
+            return Ok($"Вы авторизированы,{User.Identity.Name}.");
         }
     }
 }

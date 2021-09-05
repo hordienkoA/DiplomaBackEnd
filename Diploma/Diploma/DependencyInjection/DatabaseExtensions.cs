@@ -1,4 +1,4 @@
-﻿using Diploma.Models.Contexts;
+﻿using EFCoreConfiguration.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -13,7 +13,12 @@ namespace Diploma.DependencyInjection
         public static void AddAuthenticationCustom(this IServiceCollection services, IConfiguration configuration)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("diploma_secret"));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options=>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(
                     options =>
                     {

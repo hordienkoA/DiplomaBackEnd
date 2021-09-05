@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Diploma.Models.Contexts
+namespace EFCoreConfiguration.Models.Contexts
 {
     interface IDbContext: IDisposable
     {

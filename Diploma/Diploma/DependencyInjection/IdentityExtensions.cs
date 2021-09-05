@@ -1,5 +1,5 @@
-﻿using Diploma.Models;
-using Diploma.Models.Contexts;
+﻿using EFCoreConfiguration.Models;
+using EFCoreConfiguration.Models.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

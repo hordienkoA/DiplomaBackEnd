@@ -1,9 +1,10 @@
-﻿using Diploma.Models;
+﻿using System.Threading.Tasks;
+using EFCoreConfiguration.Models;
 
 namespace Diploma.JWT
 {
     public interface IJwtGenerator
     {
-        string CreateToken(User user);
+        Task<string> CreateToken(User user);
     }
 }
