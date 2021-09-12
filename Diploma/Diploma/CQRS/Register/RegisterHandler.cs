@@ -28,6 +28,10 @@ namespace Diploma.CQRS.Register
                 Age = request.Age
             };
             var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Student");
+            }
 
             return result;
         }

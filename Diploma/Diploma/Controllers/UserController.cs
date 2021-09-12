@@ -2,10 +2,8 @@
 using Diploma.CQRS.Login;
 using Diploma.CQRS.Register;
 using Diploma.Views;
-using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diploma.Controllers
@@ -46,7 +44,7 @@ namespace Diploma.Controllers
         }
 
         [Route("test")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Student")]
         [HttpGet]
         public async Task<IActionResult> Test()
         {

@@ -19,3 +19,8 @@ services:
         environment:
             SA_PASSWORD: "diploma_dbPass"
             ACCEPT_EULA: "Y" 
+            MSSQL_PID: "Express"
+        volumes:
+            - mssqlvolume:/var/lib/docker/volumes/mssqlvolume/_data
+volumes:
+    mssqlvolume:

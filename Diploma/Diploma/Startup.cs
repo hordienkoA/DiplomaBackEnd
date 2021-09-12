@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using Diploma.DependencyInjection;
+using EFCoreConfiguration.Models.Contexts;
 using MediatR;
 
 namespace Diploma
@@ -26,14 +27,13 @@ namespace Diploma
             services.AddServicesCustom();
             services.AddMvcCustom();
             services.AddAuthenticationCustom(Configuration);
-            services.AddAuthorizationCustom();
             services.AddSwaggerCustom();
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext context)
         {
             if (env.IsDevelopment())
             {
@@ -42,6 +42,7 @@ namespace Diploma
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Diploma v1"));
             }
 
+            app.ApplyMigrations(context);
             app.UseHttpsRedirection();
 
             app.UseRouting();

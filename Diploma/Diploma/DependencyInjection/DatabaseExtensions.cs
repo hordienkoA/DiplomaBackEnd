@@ -1,4 +1,5 @@
 ﻿using EFCoreConfiguration.Models.Contexts;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,11 @@ namespace Diploma.DependencyInjection
             {
                 options.UseSqlServer(connectionString);
             });
+        }
+
+        public static void ApplyMigrations(this IApplicationBuilder app, ApplicationContext context)
+        {
+            context.Database.Migrate();
         }
     }
 }

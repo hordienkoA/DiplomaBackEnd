@@ -8,6 +8,7 @@ EXPOSE 5001
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR "/src/Diploma/"
 COPY . .
+WORKDIR "/src/Diploma/Diploma"
 RUN dotnet restore "Diploma.csproj"
 RUN dotnet build "Diploma.csproj" -c Release -o /app/build
 
