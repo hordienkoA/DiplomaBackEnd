@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Diploma.CQRS.AdminManagement;
 using Diploma.CQRS.Login;
 using Diploma.CQRS.Register;
 using Diploma.Views;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Diploma.Controllers
 {
-    [Route("/api/user")]
+    [Route("/api/users")]
     public class UserController: Controller
     {
         private readonly IMediator _mediator;
@@ -41,6 +42,14 @@ namespace Diploma.Controllers
             }
 
             return Unauthorized("Login failed");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _mediator.Send(new GetUsersQuery());
+            return Json(users);
         }
 
         [Route("test")]

@@ -1,4 +1,5 @@
 ﻿using Diploma.JWT;
+using EFCoreConfiguration.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Diploma.DependencyInjection
@@ -8,6 +9,11 @@ namespace Diploma.DependencyInjection
         public static void AddServicesCustom(this IServiceCollection services)
         {
             services.AddScoped<IJwtGenerator, JwtGenerator>();
+        }
+
+        public static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<SubjectRepository>();
         }
     }
 }

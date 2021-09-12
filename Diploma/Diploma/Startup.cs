@@ -25,6 +25,7 @@ namespace Diploma
             services.AddSqlServerCustom(Configuration.GetConnectionString("DefaultConnection"));
             services.AddIdentityCustom();
             services.AddServicesCustom();
+            services.AddRepositories();
             services.AddMvcCustom();
             services.AddAuthenticationCustom(Configuration);
             services.AddSwaggerCustom();
