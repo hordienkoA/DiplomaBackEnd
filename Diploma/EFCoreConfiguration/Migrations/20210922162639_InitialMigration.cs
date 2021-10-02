@@ -39,7 +39,8 @@ namespace EFCoreConfiguration.Migrations
                 name: "Subjects",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseNumber = table.Column<int>(type: "int", nullable: false)
                 },
@@ -109,7 +110,7 @@ namespace EFCoreConfiguration.Migrations
                 columns: table => new
                 {
                     GroupsId = table.Column<int>(type: "int", nullable: false),
-                    SubjectsId = table.Column<long>(type: "bigint", nullable: false)
+                    SubjectsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,9 +133,11 @@ namespace EFCoreConfiguration.Migrations
                 name: "Works",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Template = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubjectId1 = table.Column<int>(type: "int", nullable: true),
                     SubjectId = table.Column<long>(type: "bigint", nullable: true),
                     Test = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -142,8 +145,8 @@ namespace EFCoreConfiguration.Migrations
                 {
                     table.PrimaryKey("PK_Works", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Works_Subjects_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_Works_Subjects_SubjectId1",
+                        column: x => x.SubjectId1,
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -238,7 +241,7 @@ namespace EFCoreConfiguration.Migrations
                 name: "SubjectUser",
                 columns: table => new
                 {
-                    SubjectsId = table.Column<long>(type: "bigint", nullable: false),
+                    SubjectsId = table.Column<int>(type: "int", nullable: false),
                     TeachersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -348,9 +351,9 @@ namespace EFCoreConfiguration.Migrations
                 column: "TeachersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Works_SubjectId",
+                name: "IX_Works_SubjectId1",
                 table: "Works",
-                column: "SubjectId");
+                column: "SubjectId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

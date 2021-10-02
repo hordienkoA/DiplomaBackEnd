@@ -2,9 +2,8 @@
 
 namespace EFCoreConfiguration.Models
 {
-    public class Group
+    public class Group: BaseEntity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int CourseNumber { get; set; }
         public List<User> Students { get; set; }

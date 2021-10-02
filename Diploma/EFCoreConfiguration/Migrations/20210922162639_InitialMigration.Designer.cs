@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreConfiguration.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210912095533_InitialMigration")]
+    [Migration("20210922162639_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,10 +41,10 @@ namespace EFCoreConfiguration.Migrations
 
             modelBuilder.Entity("EFCoreConfiguration.Models.Subject", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseNumber")
                         .HasColumnType("int");
@@ -197,16 +197,19 @@ namespace EFCoreConfiguration.Migrations
 
             modelBuilder.Entity("EFCoreConfiguration.Models.Work", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("SubjectId")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("SubjectId1")
+                        .HasColumnType("int");
 
                     b.Property<string>("Template")
                         .HasColumnType("nvarchar(max)");
@@ -216,7 +219,7 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubjectId");
+                    b.HasIndex("SubjectId1");
 
                     b.ToTable("Works");
                 });
@@ -226,8 +229,8 @@ namespace EFCoreConfiguration.Migrations
                     b.Property<int>("GroupsId")
                         .HasColumnType("int");
 
-                    b.Property<long>("SubjectsId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("SubjectsId")
+                        .HasColumnType("int");
 
                     b.HasKey("GroupsId", "SubjectsId");
 
@@ -409,8 +412,8 @@ namespace EFCoreConfiguration.Migrations
 
             modelBuilder.Entity("SubjectUser", b =>
                 {
-                    b.Property<long>("SubjectsId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("SubjectsId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TeachersId")
                         .HasColumnType("nvarchar(450)");
@@ -435,7 +438,7 @@ namespace EFCoreConfiguration.Migrations
                 {
                     b.HasOne("EFCoreConfiguration.Models.Subject", "Subject")
                         .WithMany("Works")
-                        .HasForeignKey("SubjectId");
+                        .HasForeignKey("SubjectId1");
 
                     b.Navigation("Subject");
                 });

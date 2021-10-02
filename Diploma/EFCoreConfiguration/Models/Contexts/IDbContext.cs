@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreConfiguration.Models.Contexts
 {
-    interface IDbContext: IDisposable
+    public interface IDbContext: IDisposable
     {
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

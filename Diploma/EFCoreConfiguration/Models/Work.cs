@@ -1,8 +1,7 @@
 ﻿namespace EFCoreConfiguration.Models
 {
-    public class Work
+    public class Work: BaseEntity<int>
     {
-        public uint Id { get; set; }
         public string Name { get; set; }
         public string Template { get; set; }
         public Subject Subject { get; set; }
