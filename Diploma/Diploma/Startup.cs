@@ -26,6 +26,7 @@ namespace Diploma
             services.AddIdentityCustom();
             services.AddServicesCustom();
             services.AddRepositories();
+            services.AddAutomapperCustom();
             services.AddMvcCustom();
             services.AddAuthenticationCustom(Configuration);
             services.AddSwaggerCustom();

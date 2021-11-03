@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>7fb48145-121b-46ec-857b-8eb44fa72540</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <LangVersion>9.0</LangVersion>
     <OutputType>Exe</OutputType>
     <RootNamespace>Diploma</RootNamespace>
   </PropertyGroup>

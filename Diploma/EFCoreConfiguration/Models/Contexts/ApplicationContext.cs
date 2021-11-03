@@ -9,7 +9,7 @@ namespace EFCoreConfiguration.Models.Contexts
     {
         public DbSet<Group> Groups { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<Work> Works { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
         public override DbSet<TEntity> Set<TEntity>() where TEntity : class =>
             (DbSet<TEntity>)((IDbSetCache)this).GetOrAddSet(this.GetDependencies().SetSource, typeof(TEntity));
 

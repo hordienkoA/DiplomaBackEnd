@@ -36,7 +36,7 @@ namespace Diploma.Controllers
                     return Ok();
                 }
 
-                throw new BusinessException(string.Join('\n',result.Errors.Select(el=>el.Description)));
+                throw new BusinessException(string.Join('\n', result.Errors.Select(el => el.Description)));
             }
             catch(BusinessException e)
             {

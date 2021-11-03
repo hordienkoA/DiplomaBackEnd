@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;
 using MediatR;
 
@@ -22,7 +21,8 @@ namespace Diploma.CQRS.Subjects
                 _repository.AddSubject(new()
                 {
                     Name = request.Name,
-                    CourseNumber = request.CourseNumber
+                    Course = request.Course,
+                    Description = request.Description
                 });
                 return true;
             }
