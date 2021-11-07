@@ -1,6 +1,7 @@
-﻿namespace Diploma.Views
+﻿
+namespace Diploma.Views
 {
-    public class UserView
+    public class UserView: IView
     {
         public string UserName { get; set; }
         public string Email { get; set; }

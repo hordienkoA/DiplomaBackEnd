@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Diploma.DependencyInjection;
+using Diploma.Views;
 using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;
 using MediatR;
@@ -11,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Diploma.CQRS.Lessons
 {
-    public class RemoveLessonHandler: IRequestHandler<RemoveLessonRequest, bool>
+    public class RemoveLessonHandler: IRequestHandler<RemoveLessonRequest, ResultView>
     {
         private readonly LessonRepository _repository;
         private readonly UserManager<User> _userManager;
@@ -24,19 +23,20 @@ namespace Diploma.CQRS.Lessons
         {
             _repository = repository;
             _userManager = userManager;
+            _accessor = accessor;
         }
-        public async Task<bool> Handle(RemoveLessonRequest request, CancellationToken cancellationToken)
+        public async Task<ResultView> Handle(RemoveLessonRequest request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(_accessor.User.Identity.Name);
             var roles = await _userManager.GetRolesAsync(user);
             var lessons = await _repository.GetLessonsAsync(request.LessonId, null, _accessor.User.Identity.Name, roles.ToList());
             if (lessons.Count == 0)
             {
-                return false;
+                return new(){Error = new(403, "Ви не маєте доступу до даного завдання або його не існує в системі")};
             }
 
             _repository.DeleteLesson(lessons.FirstOrDefault());
-            return true;
+            return new();
         }
     }
 }

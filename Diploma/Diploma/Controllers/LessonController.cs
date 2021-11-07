@@ -18,10 +18,17 @@ namespace Diploma.Controllers
 
         [Authorize(Roles = "Administrator,Teacher,Student")]
         [HttpGet]
-        public async Task<IActionResult> GetLessons([FromQuery] GetLessonsRequest model)
+        [Route("{id:int?}")]
+        public async Task<IActionResult> GetLessons(int? id, [FromQuery] string filter, int? SubjectId)
         {
+            var model = new GetLessonsRequest { LessonId = id, Filter = filter,  SubjectId = SubjectId};
             var result = await _mediator.Send(model);
-            return result != null ? Json(result) : NotFound();
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Json(result.Views);
         }
 
         [Authorize(Roles = "Administrator,Teacher")]
@@ -29,7 +36,12 @@ namespace Diploma.Controllers
         public async Task<IActionResult> CreateLesson([FromBody] AddLessonRequest model)
         {
             var result = await _mediator.Send(model);
-            return result ? Ok() : BadRequest();
+            if(result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Ok();
         }
 
         [Authorize(Roles = "Administrator,Teacher")]
@@ -37,7 +49,25 @@ namespace Diploma.Controllers
         public async Task<IActionResult> DeleteLesson([FromBody] RemoveLessonRequest model)
         {
             var result = await _mediator.Send(model);
-            return result ? Ok() : NotFound();
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpPut]
+        public async Task<IActionResult> EditLesson([FromBody] EditLessonRequest model)
+        {
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Json(result.Views);
         }
     }
 }

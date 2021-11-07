@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Diploma.Views;
 using MediatR;
 
 namespace Diploma.CQRS.Lessons
 {
-    public class RemoveLessonRequest: IRequest<bool>
+    public class RemoveLessonRequest: IRequest<ResultView>
     {
         public int LessonId { get; set; }
     }

@@ -3,7 +3,7 @@ using EFCoreConfiguration.Models.Enums;
 
 namespace Diploma.Views
 {
-    public class LessonView
+    public class LessonView : IView
     {
         public int Id { get; set; }
         public string Name { get; set; }

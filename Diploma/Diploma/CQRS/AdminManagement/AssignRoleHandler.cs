@@ -26,7 +26,7 @@ namespace Diploma.CQRS.AdminManagement
             var wrongRoles = request.Roles.Where(el => !_roleManager.Roles.Any(r => r.Name == el));
                 if (wrongRoles.Any())
                 {
-                    throw new BusinessException($"These roles don`t exist: {String.Join(',', wrongRoles)}");
+                    throw new BusinessException($"Цих ролей не існує: {String.Join(',', wrongRoles)}");
                 }
                 var user = await _userManager.FindByNameAsync(request.UserName);
                 var result = await _userManager.AddToRolesAsync(user, request.Roles);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Models.Contexts;
@@ -48,7 +47,7 @@ namespace EFCoreConfiguration.Repositories
             return await Context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity> FindAsync(int id)
+        public virtual async Task<TEntity> FindAsync(int id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
         }

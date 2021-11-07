@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Diploma.CQRS.Lessons;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
@@ -32,6 +28,8 @@ namespace Diploma.DependencyInjection
             CreateMap<Lesson, LessonView>();
             CreateMap<Subject, SubjectView>();
             CreateMap<Lesson, AddLessonRequest>();
+            CreateMap<EditLessonRequest, Lesson>();
+            CreateMap<Lesson, LessonView>();
         }
     }
 }

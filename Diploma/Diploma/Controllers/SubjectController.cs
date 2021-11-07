@@ -18,10 +18,17 @@ namespace Diploma.Controllers
 
         [Authorize(Roles = "Administrator,Teacher,Student")]
         [HttpGet]
-        public async Task<IActionResult> GetSubjects([FromQuery] GetSubjectsRequest model)
+        [Route("{id:int?}")]
+        public async Task<IActionResult> GetSubjects(int? id, [FromQuery]string filter)
         {
+            var model = new GetSubjectsRequest { SubjectId = id, Filter = filter };
             var result = await _mediator.Send(model);
-            return result != null ? Json(result) : NotFound();
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Json(result.Views);
         }
 
         [Authorize(Roles = "Administrator,Teacher")]
@@ -29,7 +36,12 @@ namespace Diploma.Controllers
         public async Task<IActionResult> CreateSubject([FromBody] AddSubjectRequest model)
         {
             var result = await _mediator.Send(model);
-            return result ? Ok() : BadRequest();
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Ok();
         }
     }
 }

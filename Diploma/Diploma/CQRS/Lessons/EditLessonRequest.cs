@@ -5,8 +5,9 @@ using MediatR;
 
 namespace Diploma.CQRS.Lessons
 {
-    public class AddLessonRequest: IRequest<ResultView>
+    public class EditLessonRequest: IRequest<ResultView>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public StatusEnum Status { get; set; }
         public DateTime ValidTill { get; set; }

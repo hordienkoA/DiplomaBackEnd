@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Diploma.Views;
 using MediatR;
 
 namespace Diploma.CQRS.Subjects
 {
-    public class GetSubjectsRequest:  IRequest<List<SubjectView>>
+    public class GetSubjectsRequest:  IRequest<ResultView>
     {
-        public int? SubjectId { get; set; }
+        public int? SubjectId { get; set; } = null;
         public string Filter { get; set; }
     }
 }
