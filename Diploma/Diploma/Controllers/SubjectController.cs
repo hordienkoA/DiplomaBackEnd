@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Diploma.CQRS.Lessons;
 using Diploma.CQRS.Subjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -42,6 +43,33 @@ namespace Diploma.Controllers
                 return Json(result.Error.Message);
             }
             return Ok();
+        }
+
+        [Authorize(Roles = "Administrator,Teacher")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSubject(RemoveSubjectRequest model)
+        {
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administrator,Teacher")]
+        [HttpPut]
+        public async Task<IActionResult> EditSubject([FromBody] EditSubjectRequest model)
+        {
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+
+            return Json(result.Views);
         }
     }
 }

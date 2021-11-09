@@ -46,15 +46,7 @@ namespace Diploma.CQRS.Lessons
                     };
                 }
 
-                _repository.AddLesson(new()
-                {
-                    Name= request.Name,
-                    Description = request.Description,
-                    Status = request.Status,
-                    ValidTill = request.ValidTill,
-                    SubjectId = request.SubjectId,
-                    
-                });
+                _repository.AddLesson(_mapper.Map<Lesson>(request));
                 return new();
             }
             catch (Exception ex)

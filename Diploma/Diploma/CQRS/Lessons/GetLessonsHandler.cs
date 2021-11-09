@@ -41,13 +41,7 @@ namespace Diploma.CQRS.Lessons
 
                 return new()
                 {
-                    Views = new List<IView>(lessons.Select(e => new LessonView()
-                    {
-                        Name = e.Name,
-                        Description = e.Description,
-                        ValidTill = e.ValidTill,
-                        Status = e.Status
-                    }).ToList())
+                    Views = new List<IView>(lessons.Select(el => _mapper.Map<LessonView>(el)).ToList())
                 };
             }
             catch (Exception ex)
