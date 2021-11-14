@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+	<ImplicitUsings>true</ImplicitUsings>
     <UserSecretsId>7fb48145-121b-46ec-857b-8eb44fa72540</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <LangVersion>10.0</LangVersion>
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EFCoreConfiguration\EFCoreConfiguration.csproj" />
+    <ProjectReference Include="..\LocaleData\LocaleData.csproj" />
   </ItemGroup>
 
 </Project>

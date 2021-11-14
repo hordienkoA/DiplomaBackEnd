@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Diploma.Views;
+﻿using Diploma.Views;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

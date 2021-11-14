@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Diploma.DependencyInjection;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;
+using LocaleData;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace Diploma.CQRS.Subjects
 {
@@ -17,17 +16,20 @@ namespace Diploma.CQRS.Subjects
         private readonly UserManager<User> _userManager;
         private readonly IUserAccessor _accessor;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<Messages> _localization;
 
         public EditSubjectHandler(
             SubjectRepository repository,
             UserManager<User> userManager,
             IUserAccessor accessor,
-            IMapper mapper)
+            IMapper mapper,
+            IStringLocalizer<Messages> localization)
         {
             _repository = repository;
             _userManager = userManager;
             _accessor = accessor;
             _mapper = mapper;
+            _localization=localization;
         }
         public async Task<ResultView> Handle(EditSubjectRequest request, CancellationToken cancellationToken)
         {
@@ -38,7 +40,7 @@ namespace Diploma.CQRS.Subjects
             if (subjects.Count == 0)
             {
                 return new()
-                    { Error = new(403, "Ви не маєте доступу до данного предмета або його не існує в системі ") };
+                    { Error = new(403, _localization["EditSubject_SubjectAccessError"]) };
             }
 
             _repository.EditSubject(_mapper.Map<Subject>(request));

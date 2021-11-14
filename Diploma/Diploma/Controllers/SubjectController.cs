@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Diploma.CQRS.Lessons;
-using Diploma.CQRS.Subjects;
+﻿using Diploma.CQRS.Subjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Diploma.Controllers
 {
     [Route("api/subjects")]
-    public class SubjectController: Controller
+    public class SubjectController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -36,6 +34,12 @@ namespace Diploma.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSubject([FromBody] AddSubjectRequest model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
             var result = await _mediator.Send(model);
             if (result.Error != null)
             {
@@ -49,6 +53,12 @@ namespace Diploma.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteSubject(RemoveSubjectRequest model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
             var result = await _mediator.Send(model);
             if (result.Error != null)
             {
@@ -62,6 +72,12 @@ namespace Diploma.Controllers
         [HttpPut]
         public async Task<IActionResult> EditSubject([FromBody] EditSubjectRequest model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
             var result = await _mediator.Send(model);
             if (result.Error != null)
             {

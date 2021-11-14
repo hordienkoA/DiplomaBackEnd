@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Diploma.CQRS.Lessons;
+﻿using Diploma.CQRS.Lessons;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +47,12 @@ namespace Diploma.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteLesson([FromBody] RemoveLessonRequest model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
             var result = await _mediator.Send(model);
             if (result.Error != null)
             {

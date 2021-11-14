@@ -3,7 +3,6 @@ using Diploma.CQRS.Lessons;
 using Diploma.CQRS.Subjects;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Diploma.DependencyInjection
 {

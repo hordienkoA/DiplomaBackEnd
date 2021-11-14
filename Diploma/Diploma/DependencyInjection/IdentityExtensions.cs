@@ -1,7 +1,6 @@
 ﻿using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Models.Contexts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Diploma.DependencyInjection
 {

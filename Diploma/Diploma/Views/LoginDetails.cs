@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Diploma.Views
+﻿namespace Diploma.Views
 {
     public class LoginDetails: IView
     {
         public string Token { get; set; }
-        public List<string> Roles { get; set; }
+        public IList<string> Roles { get; set; }
     }
 }

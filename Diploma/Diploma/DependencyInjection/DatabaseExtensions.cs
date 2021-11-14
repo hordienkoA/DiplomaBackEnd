@@ -1,7 +1,5 @@
 ﻿using EFCoreConfiguration.Models.Contexts;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Diploma.DependencyInjection

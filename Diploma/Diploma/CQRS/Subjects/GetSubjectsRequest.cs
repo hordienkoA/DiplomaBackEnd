@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Diploma.Views;
+﻿using Diploma.Views;
 using MediatR;
 
 namespace Diploma.CQRS.Subjects

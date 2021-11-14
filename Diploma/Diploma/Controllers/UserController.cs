@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using Diploma.CQRS.AdminManagement;
+﻿using Diploma.CQRS.AdminManagement;
 using Diploma.CQRS.Login;
 using Diploma.CQRS.Register;
-using Diploma.Views;
+using LocaleData;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace Diploma.Controllers
 {
@@ -13,15 +13,25 @@ namespace Diploma.Controllers
     public class UserController: Controller
     {
         private readonly IMediator _mediator;
-        public UserController(IMediator mediator)
+        private readonly IStringLocalizer<Messages> _localization;
+        public UserController(
+            IMediator mediator,
+            IStringLocalizer<Messages> localization)
         {
             _mediator = mediator;
+            _localization = localization;
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterQuery query)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
             var result = await _mediator.Send(query);
             if (result.Succeeded)
             {
@@ -35,13 +45,19 @@ namespace Diploma.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginQuery query)
         {
-            var token=await _mediator.Send(query);
-            if (token != null)
+            if (!ModelState.IsValid)
             {
-                return Ok(new LoginDetails{Token = token});
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
+            var result = await _mediator.Send(query);
+            if (result != null)
+            {
+                return Ok(result);
             }
 
-            return Unauthorized("Login failed");
+            return Unauthorized(_localization["Login_Unauthorized"]);
         }
 
         [HttpGet]
@@ -52,12 +68,5 @@ namespace Diploma.Controllers
             return Json(users);
         }
 
-        [Route("test")]
-        [Authorize(Roles = "Student")]
-        [HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            return Ok($"Вы авторизированы,{User.Identity.Name}.");
-        }
     }
 }

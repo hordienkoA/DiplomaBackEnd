@@ -1,14 +1,13 @@
 ﻿using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
 using Diploma.JWT;
+using Diploma.Views;
 using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Diploma.CQRS.Login
 {
-    public class LoginHandler: IRequestHandler<LoginQuery,string>
+    public class LoginHandler: IRequestHandler<LoginQuery, LoginDetails>
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -21,7 +20,7 @@ namespace Diploma.CQRS.Login
             _generator = generator;
         }
 
-        public async Task<string> Handle(LoginQuery request, CancellationToken cancellationToken)
+        public async Task<LoginDetails> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             var emailChecker =  MailAddress.TryCreate(request.UserNameOrEmail, out var temp);
             var user = emailChecker 
@@ -31,7 +30,10 @@ namespace Diploma.CQRS.Login
 
             if (result.Succeeded)
             {
-                return await _generator.CreateToken(user);
+                return new LoginDetails() { 
+                    Token = await _generator.CreateToken(user),
+                    Roles = await _userManager.GetRolesAsync(user)
+                };
             }
 
             return null;

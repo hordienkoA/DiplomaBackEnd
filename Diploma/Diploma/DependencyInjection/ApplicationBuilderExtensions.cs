@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace Diploma.DependencyInjection
+﻿namespace Diploma.DependencyInjection
 {
     public static class ApplicationBuilderExtensions
     {

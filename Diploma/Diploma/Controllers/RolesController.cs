@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Diploma.CQRS.AdminManagement;
+﻿using Diploma.CQRS.AdminManagement;
 using Diploma.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -26,10 +24,16 @@ namespace Diploma.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AssignToRole([FromBody] AssignRoleQuery model)
+        public async Task<IActionResult> AssignToRoles([FromBody] AssignRoleQuery model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(el => el.ErrorMessage));
+                }
                 var result = await _mediator.Send(model);
                 if (result.Succeeded)
                 {

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Diploma.DependencyInjection;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;
+using LocaleData;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace Diploma.CQRS.Subjects
 {
@@ -19,17 +16,20 @@ namespace Diploma.CQRS.Subjects
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IUserAccessor _accessor;
+        private readonly IStringLocalizer<Messages> _localization;
 
         public GetSubjectHandler(
             SubjectRepository repository,
             IMapper mapper,
             UserManager<User> userManager,
-            IUserAccessor accessor)
+            IUserAccessor accessor,
+            IStringLocalizer<Messages> localization)
         {
             _repository = repository;
             _mapper = mapper;
             _userManager = userManager;
             _accessor = accessor;
+            _localization = localization;
         }
         public async Task<ResultView> Handle(GetSubjectsRequest request, CancellationToken cancellationToken)
         {
@@ -42,7 +42,7 @@ namespace Diploma.CQRS.Subjects
                 {
                     return new()
                     {
-                        Error = new(404, "Предметів не знайдено")
+                        Error = new(404, _localization["GetSubjects_NotFound"])
                     };
                 }
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Diploma.Exceptions
+﻿namespace Diploma.Exceptions
 {
     public class BusinessException: Exception
     {

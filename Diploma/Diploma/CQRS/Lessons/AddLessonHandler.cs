@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Diploma.DependencyInjection;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;
+using LocaleData;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace Diploma.CQRS.Lessons
 {
@@ -18,19 +17,22 @@ namespace Diploma.CQRS.Lessons
         private readonly IMapper _mapper;
         private readonly IUserAccessor _accessor;
         private readonly UserManager<User> _userManager;
+        private readonly IStringLocalizer<Messages> _localization;
 
         public AddLessonHandler(
             LessonRepository repository,
             IMapper mapper,
             UserManager<User> userManager,
             IUserAccessor accessor,
-            SubjectRepository subjectRepository)
+            SubjectRepository subjectRepository,
+            IStringLocalizer<Messages> localization)
         {
             _repository = repository;
             _mapper = mapper;
             _userManager = userManager;
             _accessor = accessor;
             _subjectRepository = subjectRepository;
+            _localization = localization;
         }
         public async Task<ResultView> Handle(AddLessonRequest request, CancellationToken cancellationToken)
         {
@@ -42,7 +44,7 @@ namespace Diploma.CQRS.Lessons
                 {
                     return new()
                     {
-                        Error = new(403, $"Ви не можете додати це завдання до предмета з id - {request.SubjectId}")
+                        Error = new(403, $"{_localization["AddLesson_WrongSubject"]} - {request.SubjectId}")
                     };
                 }
 

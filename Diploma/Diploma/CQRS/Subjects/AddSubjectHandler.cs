@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Diploma.DependencyInjection;
+﻿using Diploma.DependencyInjection;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;

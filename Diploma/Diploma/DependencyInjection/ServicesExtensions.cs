@@ -1,6 +1,5 @@
 ﻿using Diploma.JWT;
 using EFCoreConfiguration.Repositories;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Diploma.DependencyInjection
 {
