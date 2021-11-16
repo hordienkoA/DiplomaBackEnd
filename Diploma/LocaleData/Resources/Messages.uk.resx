@@ -187,7 +187,7 @@
     <value>{0} є необхідним полем</value>
   </data>
   <data name="RemoveSubject_AccessError" xml:space="preserve">
-    <value>Ви не маєте прав для видалення цього предмета</value>
+    <value>Ви не маєте прав для видалення цього предмета або його не існує в системі</value>
   </data>
   <data name="RemoveSubject_Id_Required" xml:space="preserve">
     <value>{0} є необхідним полем</value>

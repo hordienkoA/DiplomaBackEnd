@@ -28,8 +28,6 @@ namespace EFCoreConfiguration.Repositories
                         {
                             Id = e.Id,
                             Name = e.Name,
-                            Status = e.Status,
-                            ValidTill = e.ValidTill,
                             Description = e.Description
                         }).ToList()
                     }

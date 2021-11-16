@@ -56,7 +56,7 @@ namespace Diploma.CQRS.Subjects
                         Description = el.Description,
                         Lessons = el.Lessons
                             .Select(e => _mapper.Map<LessonView>(e)).ToList()
-                    }).ToList())
+                    }))
                 };
             }
             catch (Exception ex)

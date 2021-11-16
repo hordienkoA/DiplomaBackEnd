@@ -51,8 +51,10 @@ namespace Diploma.Controllers
 
         [Authorize(Roles = "Administrator,Teacher")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteSubject(RemoveSubjectRequest model)
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteSubject(int id)
         {
+            var model = new RemoveSubjectRequest { SubjectId = id };
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values

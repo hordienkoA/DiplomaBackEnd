@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Diploma.CQRS.Lessons;
 using Diploma.CQRS.Subjects;
+using Diploma.CQRS.Task;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
 
@@ -31,6 +32,8 @@ namespace Diploma.DependencyInjection
             CreateMap<EditLessonRequest, Lesson>();
             CreateMap<EditSubjectRequest, Subject>();
             CreateMap<Lesson, LessonView>();
+            CreateMap<AddTaskRequest, EFCoreConfiguration.Models.Task>();
+            CreateMap<EFCoreConfiguration.Models.Task, TaskView>();
         }
     }
 }

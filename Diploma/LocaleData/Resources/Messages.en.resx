@@ -187,7 +187,7 @@
     <value>{0} is requred field</value>
   </data>
   <data name="RemoveSubject_AccessError" xml:space="preserve">
-    <value>You haven't access for removing this subject</value>
+    <value>You haven't access for removing this subject or it doesn`t exist in the system</value>
   </data>
   <data name="RemoveSubject_Id_Required" xml:space="preserve">
     <value>{0} is required field</value>

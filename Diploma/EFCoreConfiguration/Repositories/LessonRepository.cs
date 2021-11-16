@@ -25,8 +25,6 @@ namespace EFCoreConfiguration.Repositories
                     Id = el.Id,
                     Name = el.Name,
                     Description = el.Description,
-                    Status = el.Status,
-                    ValidTill = el.ValidTill
                 }).ToListAsync();
         }
 
@@ -46,6 +44,11 @@ namespace EFCoreConfiguration.Repositories
         {
             Remove(lesson);
             Context.SaveChanges();
+        }
+
+        public async Task<Lesson> GetLessonAsync(int id, User user)
+        {
+            return await Context.Lessons.Include(l => l.Subject).ThenInclude(s => s.Users).FirstOrDefaultAsync(l => l.Id == id && l.Subject.Users.Contains(user));
         }
     }
 }
