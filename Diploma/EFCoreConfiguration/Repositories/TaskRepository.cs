@@ -1,4 +1,5 @@
-﻿using EFCoreConfiguration.Models.Contexts;
+﻿using EFCoreConfiguration.Models;
+using EFCoreConfiguration.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreConfiguration.Repositories
@@ -9,9 +10,16 @@ namespace EFCoreConfiguration.Repositories
         {
         }
 
-        public async Task<List<Models.Task>> GetTasksAsync(int? id, int? lessonId)
+        public async Task<List<Models.Task>> GetTasksAsync(int? id, int? lessonId, User user)
         {
-            return await Source.Where(el => el.Id == (id ?? el.Id) && el.LessonId == (lessonId ?? el.LessonId)).ToListAsync();
+            return await Source
+                .Include(t => t.Lesson)
+                .ThenInclude(l => l.Subject)
+                .ThenInclude(s => s.Users)
+                .Where(el => el.Id == (id ?? el.Id)
+                && el.LessonId == (lessonId ?? el.LessonId)
+                && el.Lesson.Subject.Users.Contains(user))
+                .ToListAsync();
         }
 
         public void AddTask(Models.Task task)
@@ -34,7 +42,7 @@ namespace EFCoreConfiguration.Repositories
 
         public override async Task<Models.Task> FindAsync(int id)
         {
-            return await Source.Include(t=>t.Lesson).FirstOrDefaultAsync(el => el.Id == id);
+            return await Source.Include(t => t.Lesson).FirstOrDefaultAsync(el => el.Id == id);
         }
     }
 }
