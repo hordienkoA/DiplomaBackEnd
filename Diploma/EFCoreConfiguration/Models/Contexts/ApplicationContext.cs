@@ -26,6 +26,7 @@ namespace EFCoreConfiguration.Models.Contexts
             builder.ApplyConfiguration(new RolesConfiguration());
             builder.ApplyConfiguration(new UsersConfiguration());
             builder.ApplyConfiguration(new UsersWithRoleConfiguration());
+            builder.ApplyConfiguration(new GroupsConfiguration());
         }
     }
 }

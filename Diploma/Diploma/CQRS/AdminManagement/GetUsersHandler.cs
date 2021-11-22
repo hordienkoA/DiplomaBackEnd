@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Diploma.CQRS.AdminManagement
 {
-    public class GetUsersHandler: IRequestHandler<GetUsersQuery, List<UserView>>
+    public class GetUsersHandler : IRequestHandler<GetUsersQuery, ResultView>
     {
         private readonly UserManager<User> _userManager;
 
@@ -14,17 +14,25 @@ namespace Diploma.CQRS.AdminManagement
         {
             _userManager = userManager;
         }
-        public async Task<List<UserView>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<ResultView> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await _userManager.Users.Select(el => new UserView()
+            var users = await _userManager.Users
+                .Where(g => g.GroupId == (request.GroupId ?? g.GroupId))
+                .Select(el => new UserView()
+                {
+                    Email = el.Email,
+                    UserName = el.UserName,
+                    FirstName = el.FirstName,
+                    SecondName = el.SecondName,
+                    Age = el.Age,
+                    GroupId = el.GroupId
+                }).ToListAsync(cancellationToken);
+            if (!users.Any())
             {
-                Email = el.Email,
-                UserName = el.UserName,
-                FirstName = el.FirstName,
-                SecondName = el.SecondName,
-                Age = el.Age
-            }).ToListAsync(cancellationToken);
-            return users;
+                return new() { Error = new(404, "Не знайдено користувачів") };
+            }
+
+            return new() { Views = new List<IView>(users)};
         }
     }
 }

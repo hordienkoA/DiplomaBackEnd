@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Newtonsoft.Json.Converters;
 
 namespace Diploma.DependencyInjection
 {
@@ -21,7 +22,7 @@ namespace Diploma.DependencyInjection
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(Messages));
                 })
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(opts => opts.SerializerSettings.Converters.Add(new StringEnumConverter()));
         }
     }
 }

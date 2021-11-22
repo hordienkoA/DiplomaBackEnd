@@ -11,7 +11,8 @@ namespace Diploma.CQRS.Task
         public string Question { get; set; }
         [Required(ErrorMessage = "AddTask_Type_Required")]
         public TaskType Type { get; set; }
-        public int AnswerNumber { get; set; }
+        [Required(ErrorMessage ="AddTask_Answer_Required")]
+        public string Answer { get; set; }
         public int LessonId { get; set; }
     }
 }

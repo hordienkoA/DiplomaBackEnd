@@ -13,7 +13,7 @@ namespace Diploma.CQRS.Lessons
     public class AddLessonHandler: IRequestHandler<AddLessonRequest, ResultView>
     {
         private readonly LessonRepository _repository;
-        public readonly SubjectRepository _subjectRepository;
+        private readonly SubjectRepository _subjectRepository;
         private readonly IMapper _mapper;
         private readonly IUserAccessor _accessor;
         private readonly UserManager<User> _userManager;

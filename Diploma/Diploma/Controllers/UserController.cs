@@ -61,11 +61,16 @@ namespace Diploma.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> GetUsers()
+        [Authorize(Roles = "Administrator,Teacher")]
+        public async Task<IActionResult> GetUsers(GetUsersQuery model)
         {
-            var users = await _mediator.Send(new GetUsersQuery());
-            return Json(users);
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Json(result.Views);
         }
 
     }

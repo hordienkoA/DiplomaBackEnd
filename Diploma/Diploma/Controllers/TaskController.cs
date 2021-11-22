@@ -25,7 +25,7 @@ namespace Diploma.Controllers
                 Response.StatusCode = result.Error.Code;
                 return Json(result.Error.Message);
             }
-            return Json(result);
+            return Json(result.Views);
         }
 
         [Authorize(Roles = "Administrator,Teacher")]
