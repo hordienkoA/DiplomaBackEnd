@@ -10,6 +10,11 @@ namespace EFCoreConfiguration.Models.Contexts
         public DbSet<Group> Groups { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<LessonInfo> LessonsInfo { get; set; }
+        public DbSet<SubjectInfo> SubjectInfo { get; set; }
+        public DbSet<TaskInfo> TaskInfo { get; set; }
         public override DbSet<TEntity> Set<TEntity>() where TEntity : class =>
             (DbSet<TEntity>)((IDbSetCache)this).GetOrAddSet(this.GetDependencies().SetSource, typeof(TEntity));
 
@@ -27,6 +32,7 @@ namespace EFCoreConfiguration.Models.Contexts
             builder.ApplyConfiguration(new UsersConfiguration());
             builder.ApplyConfiguration(new UsersWithRoleConfiguration());
             builder.ApplyConfiguration(new GroupsConfiguration());
+            builder.ApplyConfiguration(new CommentsConfiguration());
         }
     }
 }

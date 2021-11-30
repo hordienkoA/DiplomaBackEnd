@@ -1,5 +1,6 @@
 using System.Reflection;
 using Diploma.DependencyInjection;
+using Diploma.Hubs;
 using EFCoreConfiguration.Models.Contexts;
 using MediatR;
 
@@ -22,6 +23,7 @@ namespace Diploma
             services.AddIdentityCustom();
             services.AddServicesCustom();
             services.AddRepositories();
+            services.AddSignalR();
             services.AddAutomapperCustom();
             services.AddMvcCustom();
             services.AddAuthenticationCustom(Configuration);
@@ -53,6 +55,7 @@ namespace Diploma
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<CommentsHub>("/comment");
             });
         }
     }

@@ -3,6 +3,6 @@
     public class LoginDetails: IView
     {
         public string Token { get; set; }
-        public IList<string> Roles { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -8,8 +8,9 @@ namespace EFCoreConfiguration.Models
         public string SecondName { get; set; }
         public int Age { get; set; }
         public List<Subject> Subjects { get; set; }
-        public List<LessonInfo> LessonInfos;
         public Group Group { get; set; }
+        public List<Comment> Incomming { get; set; }
+        public List<Comment> Outgoing { get; set; }
         public int? GroupId { get; set; }
     }
 

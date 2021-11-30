@@ -5,7 +5,6 @@ using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-
 namespace Diploma.CQRS.Lessons
 {
     public class GetLessonsHandler : IRequestHandler<GetLessonsRequest, ResultView>
@@ -34,10 +33,20 @@ namespace Diploma.CQRS.Lessons
                 var roles = await _userManager.GetRolesAsync(user);
                 var lessons = await _repository.GetLessonsAsync(request.LessonId, request.Filter, _accessor.User.Identity.Name, roles.ToList());
 
-                return new()
+                if (roles.Contains("Teacher"))
                 {
-                    Views = new List<IView>(lessons.Select(el => _mapper.Map<LessonView>(el)).ToList())
-                };
+                    return new()
+                    {
+                        Views = new List<IView>(lessons.Select(el => _mapper.Map<LessonView>(el)).ToList())
+                    };
+                }
+                else
+                {
+                    return new()
+                    {
+                        Views = new List<IView>(lessons.Select(el => _mapper.Map<StudentLessonView>(el)).ToList())
+                    };
+                }
             }
             catch (Exception ex)
             {

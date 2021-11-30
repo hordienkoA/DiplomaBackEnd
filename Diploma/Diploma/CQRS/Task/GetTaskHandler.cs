@@ -14,6 +14,7 @@ namespace Diploma.CQRS.Task
     {
         private readonly TaskRepository _repository;
         private readonly UserManager<User> _userManager;
+        private readonly GroupRepository _groupRepository;
         private readonly IUserAccessor _accessor;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<Messages> _localization;
@@ -22,12 +23,14 @@ namespace Diploma.CQRS.Task
         public GetTaskHandler(
             TaskRepository repository,
             UserManager<User> userManager,
+            GroupRepository groupRepository,
             IUserAccessor accessor,
             IMapper mapper,
             IStringLocalizer<Messages> localization)
         {
             _repository = repository;
             _userManager = userManager;
+            _groupRepository = groupRepository;
             _accessor = accessor;
             _mapper = mapper;
             _localization = localization;
@@ -35,7 +38,8 @@ namespace Diploma.CQRS.Task
         public async Task<ResultView> Handle(GetTaskRequest request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(_accessor.User.Identity.Name);
-            var tasks = await _repository.GetTasksAsync(request.Id, request.LessonId, user);
+            var groups = await _groupRepository.GetGroupsAsync(user: user);
+            var tasks = await _repository.GetTasksAsync(request.Id, request.LessonId, user, groups);
             if (!tasks.Any())
             {
                 return new()
@@ -51,4 +55,3 @@ namespace Diploma.CQRS.Task
         }
         }
     }
-

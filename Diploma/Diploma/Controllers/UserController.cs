@@ -61,7 +61,7 @@ namespace Diploma.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator,Teacher")]
+        [Authorize(Roles = "Administrator,Teacher,Student")]
         public async Task<IActionResult> GetUsers(GetUsersQuery model)
         {
             var result = await _mediator.Send(model);

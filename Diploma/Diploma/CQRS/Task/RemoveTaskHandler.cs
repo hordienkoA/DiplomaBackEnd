@@ -13,24 +13,28 @@ namespace Diploma.CQRS.Task
     {
         private readonly TaskRepository _repository;
         private readonly UserManager<User> _userManager;
+        private readonly GroupRepository _groupRepository;
         private readonly IUserAccessor _accessor;
         private readonly IStringLocalizer<Messages> _localization;
 
         public RemoveTaskHandler(
             TaskRepository repository,
             UserManager<User> userManager,
+            GroupRepository groupRepository,
             IUserAccessor accessor,
             IStringLocalizer<Messages> localization)
         {
             _repository = repository;
             _userManager = userManager;
+            _groupRepository = groupRepository;
             _accessor = accessor;
             _localization = localization;
         }
         public async Task<ResultView> Handle(RemoveTaskRequest request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(_accessor.User.Identity.Name);
-            var tasks = await _repository.GetTasksAsync(request.TaskId, null, user);
+            var groups = await _groupRepository.GetGroupsAsync(user: user);
+            var tasks = await _repository.GetTasksAsync(request.TaskId, null, user, groups);
             if(tasks.Count == 0)
             {
                 return new() { Error = new(403, _localization["RemoveTask_AccessError"]) };

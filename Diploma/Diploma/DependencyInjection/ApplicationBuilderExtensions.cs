@@ -6,9 +6,10 @@
         {
             //because of localhost 
             app.UseCors(x => x
-                .AllowAnyOrigin()
+                .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials());
         }
     }
 }

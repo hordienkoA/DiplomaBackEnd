@@ -1,4 +1,6 @@
 ﻿using Diploma.CQRS.Subjects;
+using Diploma.CQRS.Subjects.AssignUsers;
+using Diploma.CQRS.Subjects.ResignUsers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -90,11 +92,44 @@ namespace Diploma.Controllers
             return Json(result.Views);
         }
 
-        //[Authorize(Roles = "Administator,Teacher")]
-        //[HttpPost]
-        //public async Task<IActionResult> AssignUsers()
-        //{
+        [Authorize(Roles = "Administator,Teacher")]
+        [HttpPost("assignUsers")]
+        public async Task<IActionResult> AssignUsers([FromBody] AssignUsersRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
 
-        //}
+            return Ok();
+        }
+
+        [Authorize(Roles = "Administator,Teacher")]
+        [HttpPost("resignUsers")]
+        public async Task<IActionResult> ResignUsers([FromBody] ResignUsersRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(el => el.ErrorMessage));
+            }
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+
+            return Ok();
+        }
     }
 }

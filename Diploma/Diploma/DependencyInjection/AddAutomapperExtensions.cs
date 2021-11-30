@@ -34,6 +34,8 @@ namespace Diploma.DependencyInjection
             CreateMap<EditLessonRequest, Lesson>();
             CreateMap<EditSubjectRequest, Subject>();
             CreateMap<Lesson, LessonView>();
+            CreateMap<Lesson, StudentLessonView>();
+            CreateMap<LessonInfo, LessonInfoView>();
             CreateMap<AddTaskRequest, EFCoreConfiguration.Models.Task>();
             CreateMap<EFCoreConfiguration.Models.Task, TaskView>();
             CreateMap<AddGroupRequest, Group>();

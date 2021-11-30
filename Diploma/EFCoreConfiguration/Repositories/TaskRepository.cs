@@ -10,7 +10,7 @@ namespace EFCoreConfiguration.Repositories
         {
         }
 
-        public async Task<List<Models.Task>> GetTasksAsync(int? id, int? lessonId, User user)
+        public async Task<List<Models.Task>> GetTasksAsync(int? id, int? lessonId, User user, List<Group> groups = null)
         {
             return await Source
                 .Include(t => t.Lesson)
@@ -18,7 +18,8 @@ namespace EFCoreConfiguration.Repositories
                 .ThenInclude(s => s.Users)
                 .Where(el => el.Id == (id ?? el.Id)
                 && el.LessonId == (lessonId ?? el.LessonId)
-                && el.Lesson.Subject.Users.Contains(user))
+                && el.Lesson.Subject.Users.Contains(user)
+                && ((groups == null) || (el.Lesson.Subject.Groups.Any(g=>groups.Contains(g)))))
                 .ToListAsync();
         }
 

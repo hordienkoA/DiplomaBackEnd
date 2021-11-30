@@ -1,6 +1,9 @@
-﻿using Diploma.CQRS.Lessons;
+﻿using Diploma.CQRS.LessonInfo;
+using Diploma.CQRS.Lessons;
+using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diploma.Controllers
@@ -9,10 +12,14 @@ namespace Diploma.Controllers
     public class LessonController: Controller
     {
         private readonly IMediator _mediator;
+        private readonly UserManager<User> _manager;
 
-        public LessonController(IMediator mediator)
+        public LessonController(
+            IMediator mediator,
+            UserManager<User> manager)
         {
             _mediator = mediator;
+            _manager = manager;
         }
 
         [Authorize(Roles = "Administrator,Teacher,Student")]
@@ -20,8 +27,14 @@ namespace Diploma.Controllers
         [Route("{id:int?}")]
         public async Task<IActionResult> GetLessons(int? id, [FromQuery] string filter, int? SubjectId)
         {
-            var model = new GetLessonsRequest { LessonId = id, Filter = filter,  SubjectId = SubjectId};
-            var result = await _mediator.Send(model);
+            var user = await _manager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var roles = await _manager.GetRolesAsync(user);
+            //if (roles.Contains("Teacher"))
+            //{
+                var model = new GetLessonsRequest { LessonId = id, Filter = filter, SubjectId = SubjectId };
+                var result = await _mediator.Send(model);
+            //}
+            
             if (result.Error != null)
             {
                 Response.StatusCode = result.Error.Code;
@@ -30,6 +43,23 @@ namespace Diploma.Controllers
             return Json(result.Views);
         }
 
+        [Authorize(Roles = "Student")]
+        [HttpGet("info/{id:int?}")]
+        public async Task<IActionResult> GetLessonInfos(int? id)
+        {
+            var user = await _manager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var roles = await _manager.GetRolesAsync(user);
+            var model = new GetLessonInfoRequest { LessonId = id };
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+
+            return Json(result.Views);
+
+        }
         [Authorize(Roles = "Administrator,Teacher")]
         [HttpPost]
         public async Task<IActionResult> CreateLesson([FromBody] AddLessonRequest model)

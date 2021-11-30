@@ -30,9 +30,9 @@ namespace Diploma.CQRS.Login
 
             if (result.Succeeded)
             {
-                return new LoginDetails() { 
+                return new LoginDetails() {
                     Token = await _generator.CreateToken(user),
-                    Roles = await _userManager.GetRolesAsync(user)
+                    Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault()
                 };
             }
 

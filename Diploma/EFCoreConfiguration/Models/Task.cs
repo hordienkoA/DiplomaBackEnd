@@ -9,6 +9,7 @@ namespace EFCoreConfiguration.Models
         public string Answer { get; set; }
         public int LessonId { get; set; }
         public Lesson Lesson { get; set; }
+        public List<TaskInfo> TaskInfos { get; set; }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]

@@ -10,11 +10,14 @@ namespace EFCoreConfiguration.Repositories
         {
         }
 
-        public async Task<List<Group>> GetGroupsAsync(string filter = null)
+        public async Task<List<Group>> GetGroupsAsync(string filter = null, List<int> groupIds = null, User user = null)
         {
             return await Source
+                .Include(el=>el.Users)
                 .Where(el =>
-                 el.Name.Contains(filter ?? el.Name))
+                 el.Name.Contains(filter ?? el.Name) &&
+                 ((groupIds == null) || groupIds.Any(g => g == el.Id))&&
+                 ((user == null) || el.Users.Any(u=>u==user)))
                 .ToListAsync();
         }
 
@@ -39,7 +42,7 @@ namespace EFCoreConfiguration.Repositories
 
         public async Task AddToGroup(int groupId, List<User> users)
         {
-            var group = Source.Include(g=>g.Users).FirstOrDefault(g => g.Id == groupId);
+            var group = Source.Include(g => g.Users).FirstOrDefault(g => g.Id == groupId);
             group.Users.AddRange(users);
             await Context.SaveChangesAsync();
         }
@@ -47,7 +50,7 @@ namespace EFCoreConfiguration.Repositories
         public async Task RemoveFromGroup(int groupId, List<User> users)
         {
             var group = Source.Include(g => g.Users).FirstOrDefault(g => g.Id == groupId);
-            group.Users.RemoveAll(u=>users.Any(el=>el.UserName.Equals(u.UserName)));
+            group.Users.RemoveAll(u => users.Any(el => el.UserName.Equals(u.UserName)));
             await Context.SaveChangesAsync();
         }
     }

@@ -18,6 +18,8 @@ namespace Diploma.DependencyInjection
             services.AddScoped<LessonRepository>();
             services.AddScoped<TaskRepository>();
             services.AddScoped<GroupRepository>();
+            services.AddScoped<LessonInfoRepository>();
+            services.AddScoped<TaskInfoRepository>();
         }
     }
 }
