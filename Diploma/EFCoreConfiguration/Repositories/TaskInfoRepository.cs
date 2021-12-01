@@ -15,6 +15,7 @@ namespace EFCoreConfiguration.Repositories
         {
             return await Source
                 .Include(ti=>ti.Comments)
+                .ThenInclude(c=>c.Sender)
                 .Include(ti => ti.Task)
                 .ThenInclude(t => t.Lesson)
                 .ThenInclude(l => l.Subject)

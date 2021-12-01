@@ -57,7 +57,7 @@ namespace Diploma.CQRS.Atempt
                     Type = el.Task.Type,
                     Answer = el.Answer,
                     ValidTill = el.ValidTill,
-                    Comments = el.Comments
+                    Comments = el.Comments.Select(c=>new MessageView {Id=c.Id, Message=c.Message, Sender=c.Sender.UserName }).ToList(),
                 }).ToList();
 
                 return new()

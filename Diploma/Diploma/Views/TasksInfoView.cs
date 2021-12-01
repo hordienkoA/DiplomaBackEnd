@@ -10,7 +10,7 @@ namespace Diploma.Views
         public TaskType Type { get; set; }
         public string Answer { get; set; }
         public DateTime ValidTill { get; set; }
-        public List<Comment> Comments { get; set; }
+        public List<MessageView> Comments { get; set; }
 
     }
 }

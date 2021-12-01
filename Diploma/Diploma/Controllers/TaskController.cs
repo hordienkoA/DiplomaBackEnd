@@ -119,7 +119,7 @@ namespace Diploma.Controllers
                     Response.StatusCode = result.Error.Code;
                     return Json(result.Error.Message);
                 }
-                return Ok(result.Views);
+                return Json(result.Views);
             }
             
             return Forbid();
@@ -144,5 +144,6 @@ namespace Diploma.Controllers
             }
             return Ok();
         }
+
     }
 }
