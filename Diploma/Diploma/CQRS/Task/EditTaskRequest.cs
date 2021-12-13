@@ -7,6 +7,7 @@ namespace Diploma.CQRS.Task
 {
     public class EditTaskRequest: IRequest<ResultView>
     {
+        public  int Id { get; set; }
         [Required(ErrorMessage = "EditTask_Question_Required")]
         public string Question { get; set; }
         public TaskType Type { get; set; }

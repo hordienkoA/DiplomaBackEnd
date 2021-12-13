@@ -20,9 +20,23 @@ namespace Diploma.Controllers
         [Authorize(Roles = "Administrator,Teacher,Student")]
         [HttpGet]
         [Route("{id:int?}")]
-        public async Task<IActionResult> GetSubjects(int? id, [FromQuery]string filter)
+        public async Task<IActionResult> GetSubjects([FromRoute]int? id = null)
         {
-            var model = new GetSubjectsRequest { SubjectId = id, Filter = filter };
+            var model = new GetSubjectsRequest { SubjectId = id };
+            var result = await _mediator.Send(model);
+            if (result.Error != null)
+            {
+                Response.StatusCode = result.Error.Code;
+                return Json(result.Error.Message);
+            }
+            return Json(result.Views);
+        }
+
+        [Authorize(Roles = "Administrator,Teacher,Student")]
+        [HttpGet]
+        public async Task<IActionResult> GetSubjects( string filter = null)
+        {
+            var model = new GetSubjectsRequest {  Filter = filter };
             var result = await _mediator.Send(model);
             if (result.Error != null)
             {
@@ -93,7 +107,7 @@ namespace Diploma.Controllers
         }
 
         [Authorize(Roles = "Administator,Teacher")]
-        [HttpPost("assignUsers")]
+        [HttpPost("assign-users")]
         public async Task<IActionResult> AssignUsers([FromBody] AssignUsersRequest model)
         {
             if (!ModelState.IsValid)
@@ -113,7 +127,7 @@ namespace Diploma.Controllers
         }
 
         [Authorize(Roles = "Administator,Teacher")]
-        [HttpPost("resignUsers")]
+        [HttpPost("resign-users")]
         public async Task<IActionResult> ResignUsers([FromBody] ResignUsersRequest model)
         {
             if (!ModelState.IsValid)

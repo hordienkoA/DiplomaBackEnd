@@ -91,7 +91,7 @@ namespace Diploma.Controllers
             return Ok();
         }
 
-        [HttpPost("addUsers")]
+        [HttpPost("add-users")]
         [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> AddToGroup([FromBody] AddToGroupRequest model)
         {
@@ -104,7 +104,7 @@ namespace Diploma.Controllers
             return Ok();
         }
 
-        [HttpPost("removeUsers")]
+        [HttpPost("remove-users")]
         [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> AddToGroup([FromBody] RemoveFromGroupRequest model)
         {

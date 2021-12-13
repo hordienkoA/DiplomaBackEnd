@@ -34,7 +34,7 @@ namespace Diploma.CQRS.Task
         {
             var user = await _userManager.FindByNameAsync(_accessor.User.Identity.Name);
             var groups = await _groupRepository.GetGroupsAsync(user: user);
-            var tasks = await _repository.GetTasksAsync(request.TaskId, null, user, groups);
+            var tasks = await _repository.GetTasksAsync(request.TaskId, null, user, null);
             if(tasks.Count == 0)
             {
                 return new() { Error = new(403, _localization["RemoveTask_AccessError"]) };

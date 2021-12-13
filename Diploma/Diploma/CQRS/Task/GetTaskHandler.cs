@@ -39,7 +39,7 @@ namespace Diploma.CQRS.Task
         {
             var user = await _userManager.FindByNameAsync(_accessor.User.Identity.Name);
             var groups = await _groupRepository.GetGroupsAsync(user: user);
-            var tasks = await _repository.GetTasksAsync(request.Id, request.LessonId, user, groups);
+            var tasks = await _repository.GetTasksAsync(request.Id, request.LessonId, user, null);
             if (!tasks.Any())
             {
                 return new()
