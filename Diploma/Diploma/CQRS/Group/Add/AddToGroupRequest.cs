@@ -1,4 +1,5 @@
-﻿using Diploma.Views;
+﻿using System.Collections.Generic;
+using Diploma.Views;
 using MediatR;
 
 namespace Diploma.CQRS.Group.Add

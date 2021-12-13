@@ -1,4 +1,7 @@
-﻿using System.Net.Mail;
+﻿using System.Linq;
+using System.Net.Mail;
+using System.Threading;
+using System.Threading.Tasks;
 using Diploma.JWT;
 using Diploma.Views;
 using EFCoreConfiguration.Models;

@@ -1,4 +1,7 @@
-﻿using EFCoreConfiguration.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EFCoreConfiguration.Models;
 using EFCoreConfiguration.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 

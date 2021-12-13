@@ -1,4 +1,6 @@
-﻿namespace Diploma.DependencyInjection
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Diploma.DependencyInjection
 {
     public static class AddLocalizationExtensions
     {

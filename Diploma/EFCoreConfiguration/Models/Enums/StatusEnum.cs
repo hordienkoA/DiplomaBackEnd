@@ -2,7 +2,7 @@
 
 namespace EFCoreConfiguration.Models.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StatusEnum
     {
         Open,

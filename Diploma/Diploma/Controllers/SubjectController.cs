@@ -1,4 +1,6 @@
-﻿using Diploma.CQRS.Subjects;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Diploma.CQRS.Subjects;
 using Diploma.CQRS.Subjects.AssignUsers;
 using Diploma.CQRS.Subjects.ResignUsers;
 using MediatR;

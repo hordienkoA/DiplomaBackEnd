@@ -1,4 +1,5 @@
-﻿using EFCoreConfiguration.Models;
+﻿using System.Threading.Tasks;
+using EFCoreConfiguration.Models;
 
 namespace Diploma.JWT
 {

@@ -1,4 +1,6 @@
-﻿using Diploma.CQRS.AdminManagement;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Diploma.CQRS.AdminManagement;
 using Diploma.CQRS.Login;
 using Diploma.CQRS.Register;
 using LocaleData;

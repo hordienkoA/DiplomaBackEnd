@@ -1,4 +1,7 @@
-﻿namespace EFCoreConfiguration.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace EFCoreConfiguration.Models
 {
     public class TaskInfo: BaseEntity<int>
     {

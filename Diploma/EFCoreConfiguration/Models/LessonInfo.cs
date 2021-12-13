@@ -1,4 +1,5 @@
-﻿using EFCoreConfiguration.Models.Enums;
+﻿using System;
+using EFCoreConfiguration.Models.Enums;
 
 namespace EFCoreConfiguration.Models
 {

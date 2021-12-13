@@ -1,4 +1,6 @@
-﻿namespace Diploma.Views
+﻿using System.Collections.Generic;
+
+namespace Diploma.Views
 {
     public class LessonView : IView
     {
