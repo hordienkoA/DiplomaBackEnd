@@ -1,5 +1,4 @@
-﻿using System;
-using Diploma.Views;
+﻿using Diploma.Views;
 using EFCoreConfiguration.Models.Enums;
 using MediatR;
 

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Diploma.CQRS.AdminManagement;
+﻿using Diploma.CQRS.AdminManagement;
 using Diploma.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

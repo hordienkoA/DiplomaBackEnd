@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Diploma.DependencyInjection;
 using Diploma.Views;
 using EFCoreConfiguration.Models;

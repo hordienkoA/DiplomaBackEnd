@@ -3,11 +3,6 @@ using Diploma.DependencyInjection;
 using Diploma.Hubs;
 using EFCoreConfiguration.Models.Contexts;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Diploma
 {

@@ -6,7 +6,6 @@ using Diploma.CQRS.Subjects;
 using Diploma.CQRS.Task;
 using Diploma.Views;
 using EFCoreConfiguration.Models;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Diploma.DependencyInjection
 {

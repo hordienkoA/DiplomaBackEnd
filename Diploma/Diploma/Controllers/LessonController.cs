@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Diploma.CQRS.LessonInfo;
+﻿using Diploma.CQRS.LessonInfo;
 using Diploma.CQRS.Lessons;
 using EFCoreConfiguration.Models;
 using MediatR;

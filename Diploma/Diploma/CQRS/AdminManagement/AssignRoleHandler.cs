@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Diploma.Exceptions;
+﻿using Diploma.Exceptions;
 using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

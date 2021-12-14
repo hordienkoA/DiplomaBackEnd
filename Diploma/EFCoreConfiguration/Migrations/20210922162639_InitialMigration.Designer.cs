@@ -4,151 +4,50 @@ using EFCoreConfiguration.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
-#nullable disable
 
 namespace EFCoreConfiguration.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210922162639_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReceiverId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SenderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TaskInfoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.HasIndex("TaskInfoId");
-
-                    b.ToTable("Comments");
-                });
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EFCoreConfiguration.Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Lesson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Lessons");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.LessonInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Attemts")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsPassed")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ValidTill")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("LessonsInfo");
                 });
 
             modelBuilder.Entity("EFCoreConfiguration.Models.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseNumber")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Course")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -156,86 +55,6 @@ namespace EFCoreConfiguration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.SubjectInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RelationType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("SubjectInfo");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Task", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Answer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Question")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.TaskInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Answer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ValidTill")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("TaskInfo");
                 });
 
             modelBuilder.Entity("EFCoreConfiguration.Models.User", b =>
@@ -314,7 +133,7 @@ namespace EFCoreConfiguration.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers");
 
                     b.HasData(
                         new
@@ -376,6 +195,35 @@ namespace EFCoreConfiguration.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EFCoreConfiguration.Models.Work", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SubjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("SubjectId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Template")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Test")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId1");
+
+                    b.ToTable("Works");
+                });
+
             modelBuilder.Entity("GroupSubject", b =>
                 {
                     b.Property<int>("GroupsId")
@@ -415,7 +263,7 @@ namespace EFCoreConfiguration.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles");
 
                     b.HasData(
                         new
@@ -445,9 +293,8 @@ namespace EFCoreConfiguration.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -463,16 +310,15 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -488,7 +334,7 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -510,7 +356,7 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -525,7 +371,7 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles");
 
                     b.HasData(
                         new
@@ -561,7 +407,7 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("SubjectUser", b =>
@@ -569,107 +415,32 @@ namespace EFCoreConfiguration.Migrations
                     b.Property<int>("SubjectsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsersId")
+                    b.Property<string>("TeachersId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("SubjectsId", "UsersId");
+                    b.HasKey("SubjectsId", "TeachersId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("TeachersId");
 
                     b.ToTable("SubjectUser");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Comment", b =>
-                {
-                    b.HasOne("EFCoreConfiguration.Models.User", "Receiver")
-                        .WithMany("Incomming")
-                        .HasForeignKey("ReceiverId");
-
-                    b.HasOne("EFCoreConfiguration.Models.User", "Sender")
-                        .WithMany("Outgoing")
-                        .HasForeignKey("SenderId");
-
-                    b.HasOne("EFCoreConfiguration.Models.TaskInfo", "TaskInfo")
-                        .WithMany("Comments")
-                        .HasForeignKey("TaskInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
-
-                    b.Navigation("TaskInfo");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Lesson", b =>
-                {
-                    b.HasOne("EFCoreConfiguration.Models.Subject", "Subject")
-                        .WithMany("Lessons")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.LessonInfo", b =>
-                {
-                    b.HasOne("EFCoreConfiguration.Models.Lesson", "Lesson")
-                        .WithMany("LessonInfos")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.SubjectInfo", b =>
-                {
-                    b.HasOne("EFCoreConfiguration.Models.Subject", "Subject")
-                        .WithMany("SubjectInfos")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EFCoreConfiguration.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("Subject");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Task", b =>
-                {
-                    b.HasOne("EFCoreConfiguration.Models.Lesson", "Lesson")
-                        .WithMany("Tasks")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.TaskInfo", b =>
-                {
-                    b.HasOne("EFCoreConfiguration.Models.Task", "Task")
-                        .WithMany("TaskInfos")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("EFCoreConfiguration.Models.User", b =>
                 {
                     b.HasOne("EFCoreConfiguration.Models.Group", "Group")
-                        .WithMany("Users")
+                        .WithMany("Students")
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("EFCoreConfiguration.Models.Work", b =>
+                {
+                    b.HasOne("EFCoreConfiguration.Models.Subject", "Subject")
+                        .WithMany("Works")
+                        .HasForeignKey("SubjectId1");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("GroupSubject", b =>
@@ -748,45 +519,19 @@ namespace EFCoreConfiguration.Migrations
 
                     b.HasOne("EFCoreConfiguration.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("TeachersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("EFCoreConfiguration.Models.Group", b =>
                 {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Lesson", b =>
-                {
-                    b.Navigation("LessonInfos");
-
-                    b.Navigation("Tasks");
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("EFCoreConfiguration.Models.Subject", b =>
                 {
-                    b.Navigation("Lessons");
-
-                    b.Navigation("SubjectInfos");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.Task", b =>
-                {
-                    b.Navigation("TaskInfos");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.TaskInfo", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("EFCoreConfiguration.Models.User", b =>
-                {
-                    b.Navigation("Incomming");
-
-                    b.Navigation("Outgoing");
+                    b.Navigation("Works");
                 });
 #pragma warning restore 612, 618
         }

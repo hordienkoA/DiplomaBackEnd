@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EFCoreConfiguration.Models
+﻿namespace EFCoreConfiguration.Models
 {
     public class Group: BaseEntity<int>
     {

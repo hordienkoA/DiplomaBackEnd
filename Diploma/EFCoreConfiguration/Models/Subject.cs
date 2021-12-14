@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EFCoreConfiguration.Models
+﻿namespace EFCoreConfiguration.Models
 {
     public class Subject: BaseEntity<int>
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EFCoreConfiguration.Models;
+﻿using EFCoreConfiguration.Models;
 
 namespace Diploma.Views
 {

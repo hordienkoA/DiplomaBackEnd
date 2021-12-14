@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using EFCoreConfiguration.Models;
+﻿using EFCoreConfiguration.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

@@ -27,7 +27,7 @@ namespace EFCoreConfiguration.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -42,8 +42,7 @@ namespace EFCoreConfiguration.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Course = table.Column<int>(type: "int", nullable: false)
+                    CourseNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,24 +130,26 @@ namespace EFCoreConfiguration.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Lessons",
+                name: "Works",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                    Template = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubjectId1 = table.Column<int>(type: "int", nullable: true),
+                    SubjectId = table.Column<long>(type: "bigint", nullable: true),
+                    Test = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lessons", x => x.Id);
+                    table.PrimaryKey("PK_Works", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lessons_Subjects_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_Works_Subjects_SubjectId1",
+                        column: x => x.SubjectId1,
                         principalTable: "Subjects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,46 +238,18 @@ namespace EFCoreConfiguration.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubjectInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RelationType = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubjectInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SubjectInfo_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_SubjectInfo_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SubjectUser",
                 columns: table => new
                 {
                     SubjectsId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    TeachersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubjectUser", x => new { x.SubjectsId, x.UsersId });
+                    table.PrimaryKey("PK_SubjectUser", x => new { x.SubjectsId, x.TeachersId });
                     table.ForeignKey(
-                        name: "FK_SubjectUser_AspNetUsers_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_SubjectUser_AspNetUsers_TeachersId",
+                        column: x => x.TeachersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -284,108 +257,6 @@ namespace EFCoreConfiguration.Migrations
                         name: "FK_SubjectUser_Subjects_SubjectsId",
                         column: x => x.SubjectsId,
                         principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LessonsInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    ValidTill = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Attemts = table.Column<int>(type: "int", nullable: false),
-                    IsPassed = table.Column<bool>(type: "bit", nullable: false),
-                    Mark = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LessonsInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LessonsInfo_Lessons_LessonId",
-                        column: x => x.LessonId,
-                        principalTable: "Lessons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tasks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tasks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tasks_Lessons_LessonId",
-                        column: x => x.LessonId,
-                        principalTable: "Lessons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TaskInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ValidTill = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TaskId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TaskInfo_Tasks_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "Tasks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TaskInfoId = table.Column<int>(type: "int", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_ReceiverId",
-                        column: x => x.ReceiverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comments_TaskInfo_TaskInfoId",
-                        column: x => x.TaskInfoId,
-                        principalTable: "TaskInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -470,66 +341,19 @@ namespace EFCoreConfiguration.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_ReceiverId",
-                table: "Comments",
-                column: "ReceiverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_SenderId",
-                table: "Comments",
-                column: "SenderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_TaskInfoId",
-                table: "Comments",
-                column: "TaskInfoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Groups_Name",
-                table: "Groups",
-                column: "Name",
-                unique: true,
-                filter: "[Name] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GroupSubject_SubjectsId",
                 table: "GroupSubject",
                 column: "SubjectsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lessons_SubjectId",
-                table: "Lessons",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LessonsInfo_LessonId",
-                table: "LessonsInfo",
-                column: "LessonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubjectInfo_SubjectId",
-                table: "SubjectInfo",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubjectInfo_UserId1",
-                table: "SubjectInfo",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubjectUser_UsersId",
+                name: "IX_SubjectUser_TeachersId",
                 table: "SubjectUser",
-                column: "UsersId");
+                column: "TeachersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskInfo_TaskId",
-                table: "TaskInfo",
-                column: "TaskId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_LessonId",
-                table: "Tasks",
-                column: "LessonId");
+                name: "IX_Works_SubjectId1",
+                table: "Works",
+                column: "SubjectId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -550,40 +374,25 @@ namespace EFCoreConfiguration.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comments");
-
-            migrationBuilder.DropTable(
                 name: "GroupSubject");
-
-            migrationBuilder.DropTable(
-                name: "LessonsInfo");
-
-            migrationBuilder.DropTable(
-                name: "SubjectInfo");
 
             migrationBuilder.DropTable(
                 name: "SubjectUser");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Works");
 
             migrationBuilder.DropTable(
-                name: "TaskInfo");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Tasks");
+                name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "Groups");
-
-            migrationBuilder.DropTable(
-                name: "Lessons");
-
-            migrationBuilder.DropTable(
-                name: "Subjects");
         }
     }
 }

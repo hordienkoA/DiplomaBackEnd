@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EFCoreConfiguration.Models.Contexts;
+﻿using EFCoreConfiguration.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Group = EFCoreConfiguration.Models.Group;
 using User = EFCoreConfiguration.Models.User;

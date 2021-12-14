@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Diploma.CQRS.Atempt;
+﻿using Diploma.CQRS.Atempt;
 using Diploma.CQRS.Task;
 using EFCoreConfiguration.Models;
 using MediatR;
